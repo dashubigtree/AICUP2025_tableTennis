@@ -191,12 +191,15 @@ def feature(input_data, swinging_now, swinging_times, n_fft, a_fft, g_fft, a_fft
     writer.writerow(output)
 
 def data_generate():
-    datapath = './train_data'
-    tar_dir = 'tabular_data_train'
+    missing = [298, 459, 692, 813, 1092, 1182, 1214, 1304, 1320, 1419, 1426, 1785]
+    datapath = 'AICUP_data/train_data'
+    tar_dir = 'AICUP_data/tabular_data_train'
     pathlist_txt = Path(datapath).glob('**/*.txt')
 
-    
     for file in pathlist_txt:
+        file_num = int(Path(file).stem)
+        if file_num in missing:
+            continue
         f = open(file)
 
         All_data = []
@@ -242,15 +245,15 @@ def data_generate():
 
 def main():
     # 若尚未產生特徵，請先執行 data_generate() 生成特徵 CSV 檔案
-    # data_generate()
+    data_generate()
     
     # 讀取訓練資訊，根據 player_id 將資料分成 80% 訓練、20% 測試
-    info = pd.read_csv('train_info.csv')
+    info = pd.read_csv('/Users/shuyuhsu/code_workspace/AICUP2025_tableTennis/AICUP_data/Training_Dataset/train_info.csv')
     unique_players = info['player_id'].unique()
     train_players, test_players = train_test_split(unique_players, test_size=0.2, random_state=42)
     
-    # 讀取特徵 CSV 檔（位於 "./tabular_data_train"）
-    datapath = './tabular_data_train'
+    # 讀取特徵 CSV 檔（位於指定資料夾）
+    datapath = '/Users/shuyuhsu/code_workspace/AICUP2025_tableTennis/AICUP_data/tabular_data_train'
     datalist = list(Path(datapath).glob('**/*.csv'))
     target_mask = ['gender', 'hold racket handed', 'play years', 'level']
     
