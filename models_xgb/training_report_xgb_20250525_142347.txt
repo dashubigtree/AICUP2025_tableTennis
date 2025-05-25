@@ -1,0 +1,39 @@
+XGBoost 模型訓練報告
+==================================================
+
+訓練時間: 2025-05-25 14:23:47
+隨機種子: 42
+總特徵數: 86
+
+目標: gender
+------------------------------
+交叉驗證分數: 0.9814 ± 0.0014
+測試準確率: 0.8653
+測試 AUC: 0.8759
+使用特徵數: 50
+前10個重要特徵: ['ax_rms', 'gx_var', 'corr_xy_g', 'g_peak_to_peak', 'gx_std', 'corr_yz_g', 'ax_mean', 'az_mean', 'g_skewn', 'g_mean']
+
+目標: hold racket handed
+------------------------------
+交叉驗證分數: 0.9974 ± 0.0007
+測試準確率: 0.9821
+測試 AUC: 0.9988
+使用特徵數: 50
+前10個重要特徵: ['corr_xz_g', 'ax_rms', 'gx_peak_to_peak', 'corr_xz_a', 'g_max', 'az_var', 'sma_a', 'a_mean', 'gy_mean', 'traj_length_a']
+
+目標: play years
+------------------------------
+交叉驗證分數: 0.9589 ± 0.0012
+測試準確率: 0.4965
+測試 AUC: 0.6084
+使用特徵數: 50
+前10個重要特徵: ['gx_mean', 'corr_yz_g', 'gz_rms', 'sma_g', 'g_p90', 'gy_std', 'ax_mean', 'sma_a', 'g_skewn', 'corr_xy_g']
+
+目標: level
+------------------------------
+交叉驗證分數: 0.9677 ± 0.0008
+測試準確率: 0.6132
+測試 AUC: 0.8293
+使用特徵數: 50
+前10個重要特徵: ['gx_mean', 'gz_rms', 'sma_g', 'g_max', 'sma_a', 'g_peak_to_peak', 'corr_xy_g', 'gy_peak_to_peak', 'corr_yz_g', 'g_p90']
+
