@@ -739,17 +739,12 @@ class XGBoostTrainingPipeline:
             joblib.dump(self.models[target_name], model_path)
             print(f"   ✅ 模型已儲存: {model_path}")
         
-        tools_filename = f"preprocessing_tools_xgb_{timestamp}.pkl"
-        tools_path = self.model_dir / tools_filename
-        tools_dict = {
-            'scalers': self.scalers,
-            'label_encoders': self.label_encoders,
-            'feature_names': self.feature_names,
-            'selected_features': self.selected_features,
-            'training_info': self.training_info
-        }
-        with open(tools_path, 'wb') as f:
-            pickle.dump(tools_dict, f)
+       # Save only the scalers
+        scalers_filename = f"scalers_xgb_{timestamp}.pkl"
+        scalers_path = self.model_dir / scalers_filename
+        with open(scalers_path, 'wb') as f:
+            pickle.dump(self.scalers, f)
+        print(f"   ✅ 標準化工具已儲存: {scalers_path}")
         print(f"   ✅ 預處理工具已儲存: {tools_path}")
         # ... (report saving logic remains similar) ...
         report_filename = f"training_report_xgb_{timestamp}.txt"
