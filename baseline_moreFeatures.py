@@ -144,15 +144,7 @@ def calculate_signal_magnitude_area(ax_data, ay_data, az_data):
   sma = sum(abs(ax_data[i]) + abs(ay_data[i]) + abs(az_data[i]) for i in range(len(ax_data)))
   return sma / len(ax_data)
 
-# def calculate_inter_axis_correlation(data1, data2):
-#   breakpoint()  
-#   """計算軸間相關係數"""
-#   if len(data1) != len(data2) or len(data1) < 2:
-#       return 0
-#   correlation = np.corrcoef(data1, data2)[0, 1]
-#   return correlation if not np.isnan(correlation) else 0
-
-def calculate_inter_axis_correlation(data1, data2, record_id=None):
+def calculate_inter_axis_correlation(data1, data2, record_id=None, file_name=None):
     """
     計算軸間相關係數，出錯時直接顯示是哪筆資料
     
@@ -192,8 +184,8 @@ def calculate_inter_axis_correlation(data1, data2, record_id=None):
         # 檢查標準差
         std1, std2 = np.std(arr1), np.std(arr2)
         if std1 == 0 or std2 == 0:
-            if record_id is not None:
-                print(f"❌ 第 {record_id} 筆資料錯誤：標準差為零 (std1:{std1:.6f}, std2:{std2:.6f})")
+            if record_id is not None and file_name is not None:
+                print(f"❌ 文件 {file_name} 中的第 {record_id} 筆資料錯誤：標準差為零 (std1:{std1:.6f}, std2:{std2:.6f})")
             return 0
         
         # 計算相關係數
@@ -222,7 +214,7 @@ def calculate_trajectory_length(ax_data, ay_data, az_data):
       trajectory_length += math.sqrt(dx**2 + dy**2 + dz**2)
   return trajectory_length
 
-def feature(input_data, swinging_now, swinging_times, n_fft, a_fft, g_fft, a_fft_imag, g_fft_imag, writer):
+def feature(input_data, swinging_now, swinging_times, n_fft, a_fft, g_fft, a_fft_imag, g_fft_imag, writer, file_name):
   allsum = []
   mean = []
   var = []
@@ -329,13 +321,14 @@ def feature(input_data, swinging_now, swinging_times, n_fft, a_fft, g_fft, a_fft
 #   corr_xz_g = [calculate_inter_axis_correlation(gx_data, gz_data)]
 #   corr_yz_g = [calculate_inter_axis_correlation(gy_data, gz_data)]
     # 計算相關係數，傳入當前資料編號    
-  corr_xy_a = [calculate_inter_axis_correlation(ax_data, ay_data, swinging_now)]
-  corr_xz_a = [calculate_inter_axis_correlation(ax_data, az_data, swinging_now)]
-  corr_yz_a = [calculate_inter_axis_correlation(ay_data, az_data, swinging_now)]
-    
-  corr_xy_g = [calculate_inter_axis_correlation(gx_data, gy_data, swinging_now)]
-  corr_xz_g = [calculate_inter_axis_correlation(gx_data, gz_data, swinging_now)]
-  corr_yz_g = [calculate_inter_axis_correlation(gy_data, gz_data, swinging_now)]
+  # 假設 file_name 是當前處理的文件名
+  corr_xy_a = [calculate_inter_axis_correlation(ax_data, ay_data, swinging_now, file_name)]
+  corr_xz_a = [calculate_inter_axis_correlation(ax_data, az_data, swinging_now, file_name)]
+  corr_yz_a = [calculate_inter_axis_correlation(ay_data, az_data, swinging_now, file_name)]
+  
+  corr_xy_g = [calculate_inter_axis_correlation(gx_data, gy_data, swinging_now, file_name)]
+  corr_xz_g = [calculate_inter_axis_correlation(gx_data, gz_data, swinging_now, file_name)]
+  corr_yz_g = [calculate_inter_axis_correlation(gy_data, gz_data, swinging_now, file_name)]
   # 軌跡長度
   traj_length_a = [calculate_trajectory_length(ax_data, ay_data, az_data)]
   traj_length_g = [calculate_trajectory_length(gx_data, gy_data, gz_data)]
@@ -518,7 +511,7 @@ def data_generate():
               for i in range(len(swing_index)):
                   if i==0:
                       continue
-                  feature(All_data[swing_index[i-1]: swing_index[i]], i - 1, len(swing_index) - 1, n_fft, a_fft, g_fft, a_fft_imag, g_fft_imag, writer)
+                  feature(All_data[swing_index[i-1]: swing_index[i]], i - 1, len(swing_index) - 1, n_fft, a_fft, g_fft, a_fft_imag, g_fft_imag, writer, Path(file).stem)
           except Exception as e:
               print(f"Error processing {Path(file).stem}: {e}")
               continue
