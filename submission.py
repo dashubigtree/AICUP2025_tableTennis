@@ -364,8 +364,8 @@ def main():
     # ---------------------- 配置路径和参数 ----------------------
     test_data_path = 'AICUP_data/Test_Dataset/test_data'  # 测试数据路径
     test_info_path = 'AICUP_data/Test_Dataset/test_info.csv'  # 测试信息文件（包含cut_point和mode）
-    submission_path = './sub/xgb_submission.csv'  # 输出路径
-    models_folder = './models_xgb'  # 模型和scaler存储路径
+    submission_path = './submission/submission.csv'  # 输出路径
+    models_folder = './models'  # 模型和scaler存储路径
     tar_dir = 'AICUP_data/tabular_data_test'  # 保存特征结果的目录
 
     # ---------------------- 加载测试数据和信息 ----------------------

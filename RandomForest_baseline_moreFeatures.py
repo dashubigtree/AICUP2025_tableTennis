@@ -461,6 +461,7 @@ def main():
         with open(f'./models/{model_name}.pkl', 'wb') as f:
             pickle.dump(clf, f)
 
+    breakpoint()
     # 評分：針對各目標進行模型訓練與評分
     y_train_le_gender = le.fit_transform(y_train['gender'])
     y_test_le_gender = le.transform(y_test['gender'])
