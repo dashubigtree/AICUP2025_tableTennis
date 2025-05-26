@@ -423,7 +423,7 @@ def main():
                 # 核心參數
                 n_estimators=300,           # 樹的數量
                 max_depth=6,                # 樹的深度
-                learning_rate=0.1,          # 學習率
+                learning_rate=0.001,          # 學習率
                 
                 # 正則化參數
                 reg_alpha=0.1,              # L1 正則化
@@ -477,7 +477,7 @@ def main():
                 # 核心參數
                 n_estimators=300,           # 樹的數量
                 max_depth=6,                # 樹的深度
-                learning_rate=0.1,          # 學習率
+                learning_rate=0.001,          # 學習率
                 
                 # 正則化參數
                 reg_alpha=0.1,              # L1 正則化
