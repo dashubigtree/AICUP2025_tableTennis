@@ -1,2 +1,28 @@
+# 排除超過 50MB 的大型資料檔案和資料夾
 AICUP_data/
 processed_data/train_86features.csv
+
+# 排除接近 50MB 的模型檔案
+models/level_model.pkl
+models/years_model.pkl
+
+# 其他可能的大型檔案
+*.csv
+!submission/*.csv
+!processed_data/test_86features.csv
+
+# Python 相關
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+
+# 環境和設定檔
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.DS_Store
